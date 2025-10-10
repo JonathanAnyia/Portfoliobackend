@@ -5,9 +5,9 @@ console.log("User model:", User);
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-// POST /api/auth/register
+// ✅ REGISTER
 router.post("/register", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, name } = req.body;
   try {
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ message: "User already exists" });
@@ -15,7 +15,7 @@ router.post("/register", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    user = new User({ email, password: hashedPassword });
+    user = new User({ email, password: hashedPassword, name });
     await user.save();
 
     const payload = { user: { id: user.id } };
@@ -23,12 +23,12 @@ router.post("/register", async (req, res) => {
 
     res.status(201).json({ token });
   } catch (err) {
-    console.error(err);
+    console.error("Register error:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
 
-// POST /api/auth/login
+// ✅ LOGIN
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -43,7 +43,7 @@ router.post("/login", async (req, res) => {
 
     res.json({ token });
   } catch (err) {
-    console.error(err);
+    console.error("Login error:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
