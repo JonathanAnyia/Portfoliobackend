@@ -1,11 +1,12 @@
 console.log("server.js loaded~");
+const express = require('express');
+const connectDB = require(__dirname + '/config/db.js');
 
 require('dotenv').config();
 console.log("ENV PORT:", process.env.PORT);
 
-const express = require('express');
+
 const cors = require('cors');
-const connectDB = require(__dirname + '/config/db.js');
 
 const projectsRoutes = require('./routes/projectRoutes');
 const authRoutes = require('./routes/authRoutes');
