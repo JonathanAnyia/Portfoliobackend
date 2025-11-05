@@ -1,6 +1,7 @@
 console.log("✅ projectsController loaded");
 
 const Project = require('../models/projectModels');
+console.log("✅ Loaded Project model:", Project);
 
 exports.getAllProjects = async (req, res) => {
   try {
@@ -8,7 +9,7 @@ exports.getAllProjects = async (req, res) => {
     res.json(projects);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error'});
   }
 };
 
