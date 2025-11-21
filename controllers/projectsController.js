@@ -26,10 +26,26 @@ exports.getProjectBySlug = async (req, res) => {
 
 exports.createProject = async (req, res) => {
   try {
-    const { title, description, status, slug, technologies, githubLink, liveDemoLink } = req.body;
+    const {
+      title,
+      shortDescription,
+      briefDescription,
+      description,
+      detailedProjectOverview,
+      technologies,
+      status,
+      slug,
+      featured,
+      images,
+      githubUrl,
+      liveUrl,
+      createdAt,
+      updatedAt
+    } = req.body;
 
-    if (!title || !description || !slug) {
-      return res.status(400).json({ message: 'title, description and slug are required' });
+    // Validation
+    if (!title || !shortDescription || !briefDescription || !description || !detailedProjectOverview || !technologies || !status || !slug) {
+      return res.status(400).json({ message: 'Missing required fields' });
     }
 
     const exists = await Project.findOne({ slug });
@@ -37,18 +53,25 @@ exports.createProject = async (req, res) => {
 
     const project = new Project({
       title,
+      shortDescription,
+      briefDescription,
       description,
+      detailedProjectOverview,
+      technologies,
       status,
       slug,
-      technologies,
-      githubLink,
-      liveDemoLink
+      featured: featured ?? false,
+      images: images ?? [],
+      githubUrl: githubUrl ?? '',
+      liveUrl: liveUrl ?? '',
+      createdAt: createdAt ?? new Date(),
+      updatedAt: updatedAt ?? new Date()
     });
 
     await project.save();
     res.status(201).json(project);
   } catch (err) {
-    console.error(err);
+    console.error('❌ Error creating project:', err);
     res.status(500).json({ message: 'Server error' });
   }
 };
