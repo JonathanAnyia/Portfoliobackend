@@ -19,16 +19,20 @@ connectDB();
 
 // middleware
 app.use(express.json());
-app.use(cors({ origin: [process.env.FRONTEND_URL ||"http://localhost:3000",  // local dev
-      "www.oshi-omics.com"     // hosted frontend
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: [
+    process.env.FRONTEND_URL,
+    "https://oshi-omics.com",
+    "http://localhost:3000"
+  ],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"]
+}));
+
 
 // routes
-app.use('/api/projectRoutes', projectsRoutes);
+app.use('/api/projects', projectsRoutes);
+
 app.use('/api/auth', authRoutes);
 
 app.get('/api/health', (req, res) => res.json({ ok: true, time: new Date() }));
