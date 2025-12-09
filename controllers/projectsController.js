@@ -48,7 +48,8 @@ exports.createProject = async (req, res) => {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
-    const exists = await Project.findOne({ slug });
+    const exists = await Project.findOne({ slug: slug.toLowerCase() });
+
     if (exists) return res.status(400).json({ message: 'Slug already in use' });
 
     const project = new Project({
