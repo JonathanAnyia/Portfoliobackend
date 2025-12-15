@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const projectSchema = new mongoose.Schema({
   title: { type: String, required: true },
-  shortDescription: { type: String, required: true },
-  briefDescription: { type: String, required: true },
+  shortDescription: { type: String},
+  briefDescription: { type: String},
   description: { type: String, required: true },
-  detailedProjectOverview: { type: String, required: true },
+  detailedProjectOverview: { type: String},
   technologies: { type: [String], required: true },
   status: { type: String, enum: ['completed', 'in-progress', 'planned'], required: true },
   slug: { type: String, required: true, unique: true },
