@@ -17,7 +17,7 @@ const projects = [
     ],
     githubUrl: "#",
     liveUrl: "https://oyageshio.wixsite.com/oshi-omics/projects",
-    status: "published",
+    status: "completed",
     slug: "tb-epidemiological-risk-assessment",
     featured: false,
     images: []
@@ -36,7 +36,7 @@ const projects = [
     ],
     githubUrl: "#",
     liveUrl: "https://oyageshio.wixsite.com/oshi-omics/projects",
-    status: "active",
+    status: "completed",
     slug: "tb-scrna-seq",
     featured: false,
     images: []
@@ -54,7 +54,7 @@ const projects = [
     ],
     githubUrl: "#",
     liveUrl: "#",
-    status: "active",
+    status: "completed",
     slug: "caapa-variant-annotation",
     featured: false,
     images: []
