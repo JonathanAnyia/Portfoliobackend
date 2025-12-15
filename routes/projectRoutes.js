@@ -10,8 +10,9 @@ router.get("/", controller.getAllProjects);
 router.get("/:slug", controller.getProjectBySlug);
 
 // protected (admin)
-router.post("/", controller.createProject);
-router.put("/:id", auth, controller.updateProject);
-router.delete("/:id", auth, controller.deleteProject);
+router.post("/", auth, controller.createProject);
+// use MongoDB _id in the route param to match controller's findById* usage
+router.put("/:_id", auth, controller.updateProject);
+router.delete("/:_id", auth, controller.deleteProject);
 
 module.exports = router;

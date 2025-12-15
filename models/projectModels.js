@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const projectSchema = new mongoose.Schema({
+  id: { type: String, unique: true },
   title: { type: String, required: true },
   shortDescription: { type: String},
   briefDescription: { type: String},
@@ -8,13 +9,11 @@ const projectSchema = new mongoose.Schema({
   detailedProjectOverview: { type: String},
   technologies: { type: [String], required: true },
   status: { type: String, enum: ['completed', 'in-progress', 'planned'], required: true },
-  slug: { type: String, required: true, unique: true },
+  slug: { type: String, required: true, unique: true, lowercase: true, trim: true },
   featured: { type: Boolean, default: false },
   images: { type: [String], default: [] },
   githubUrl: { type: String, default: '' },
-  liveUrl: { type: String, default: '' },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
-});
+  liveUrl: { type: String, default: '' }
+}, { timestamps: true });
 
 module.exports = mongoose.model('Project', projectSchema);
