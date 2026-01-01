@@ -26,7 +26,7 @@ exports.getProjectBySlug = async (req, res) => {
 
 exports.createProject = async (req, res) => {
   try {
-    const {
+    let {
       id,
       title,
       shortDescription,
@@ -42,15 +42,25 @@ exports.createProject = async (req, res) => {
       liveUrl
     } = req.body;
 
-    // Validation - align with schema required fields
+    // validation
     if (!title || !description || !technologies || !status || !slug) {
-      return res.status(400).json({ message: 'Missing required fields: title, description, technologies, status, slug are required' });
+      return res.status(400).json({
+        message: 'Missing required fields: title, description, technologies, status, slug'
+      });
     }
 
     const normalizedSlug = String(slug).trim().toLowerCase();
 
     const exists = await Project.findOne({ slug: normalizedSlug });
-    if (exists) return res.status(400).json({ message: 'Slug already in use' });
+    if (exists) {
+      return res.status(400).json({ message: 'Slug already in use' });
+    }
+
+    // ✅ GENERATE ID BEFORE CREATING PROJECT
+    if (!id) {
+      const count = await Project.countDocuments();
+      id = String(count + 1);
+    }
 
     const project = new Project({
       id,
@@ -75,6 +85,7 @@ exports.createProject = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 exports.updateProject = async (req, res) => {
   try {
