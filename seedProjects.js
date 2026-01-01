@@ -19,7 +19,7 @@ const projects = [
     githubUrl: "#",
     liveUrl: "https://oyageshio.wixsite.com/oshi-omics/projects",
     status: "planned",
-    slug: "tb-epidemiological-risk-assessment",
+    slug: "tb-epidemiological-risk",
     featured: false,
     images: []
   },
