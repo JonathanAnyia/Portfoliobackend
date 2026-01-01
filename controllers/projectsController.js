@@ -78,8 +78,11 @@ exports.createProject = async (req, res) => {
 
 exports.updateProject = async (req, res) => {
   try {
-  // expect route param name to be _id (routes use :_id)
-  const project = await Project.findByIdAndUpdate(req.params._id, req.body, { new: true });
+  // Use custom 'id' field, not MongoDB's _id
+  const project = await Project.findOneAndUpdate({ id: req.params.id },
+    req.body,
+    { new: true }
+  );
     if (!project) return res.status(404).json({ message: 'Project not found' });
     res.json(project);
   } catch (err) {
@@ -90,8 +93,8 @@ exports.updateProject = async (req, res) => {
 
 exports.deleteProject = async (req, res) => {
   try {
-  // expect route param name to be _id (routes use :_id)
-  const project = await Project.findByIdAndDelete(req.params._id);
+
+  const project = await Project.findOneAndDelete({ id: req.params.id });
     if (!project) return res.status(404).json({ message: 'Project not found' });
     res.json({ message: 'Project deleted' });
   } catch (err) {
