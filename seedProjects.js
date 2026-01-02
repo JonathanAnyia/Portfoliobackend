@@ -90,10 +90,12 @@ async function main() {
     try {
       // Check if project already exists
       const existing = await Project.findOne({ slug: p.slug });
-      if (!existing) {
+      if (!existing || !existing.id) {
         // Generate sequential id for new projects
-        const count = await Project.countDocuments();
-        p.id = String(count + 1);
+       const lastProject = await Project.findOne().sort({ id: -1 });
+       const nextId = lastProject ? String(Number(lastProject.id) + 1) : "1";
+       p.id = nextId;
+
       }
       // upsert by slug (prevents duplicates)
       const result = await Project.findOneAndUpdate(
