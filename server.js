@@ -23,6 +23,7 @@ app.use(cors({
   origin: [
     process.env.FRONTEND_URL,
     "https://oshi-omics.com",
+    "https://www.oshi-omics.com",
     "http://localhost:3000"
   ],
   credentials: true,

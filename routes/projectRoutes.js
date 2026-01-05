@@ -7,7 +7,8 @@ console.log("auth is:", auth);
 
 // public routes
 router.get("/", controller.getAllProjects);
-router.get("/:slug", controller.getProjectBySlug);
+router.get("/id/:id", controller.getProjectById);
+router.get("/slug/:slug", controller.getProjectBySlug);
 
 // protected (admin)
 router.post("/", auth, controller.createProject);
