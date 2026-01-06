@@ -48,6 +48,9 @@ exports.createProject = async (req, res) => {
         message: 'Missing required fields: title, description, technologies, status, slug'
       });
     }
+    if (!slug || typeof slug !== "string") {
+      return res.status(400).json({ message: "Slug is required" });
+    }
 
     const normalizedSlug = String(slug).trim().toLowerCase();
 
@@ -60,6 +63,12 @@ exports.createProject = async (req, res) => {
     if (!id) {
       const count = await Project.countDocuments();
       id = String(count + 1);
+    }
+
+    if (!Array.isArray(technologies)) {
+      return res.status(400).json({
+       message: "Technologies must be an array of strings"
+     });
     }
 
     const project = new Project({

@@ -92,7 +92,7 @@ async function main() {
       const existing = await Project.findOne({ slug: p.slug });
       if (!existing || !existing.id) {
         // Generate sequential id for new projects
-       const lastProject = await Project.findOne().sort({ id: -1 });
+       const lastProject = await Project.findOne().sort({ createdAt: -1 });
        const nextId = lastProject ? String(Number(lastProject.id) + 1) : "1";
        p.id = nextId;
 
